@@ -1,5 +1,13 @@
+import GlobalStyle from "./styles/global";
+import { Homepage } from "./pages";
+
 function App() {
-  return <p>Hello World !</p>;
+  return (
+    <>
+      <Homepage />
+      <GlobalStyle />
+    </>
+  );
 }
 
 export default App;
