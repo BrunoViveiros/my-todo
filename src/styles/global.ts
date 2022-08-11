@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
   * {
@@ -8,21 +8,24 @@ export default createGlobalStyle`
     outline: 0;
   }
 
+  html, body, #root {
+    font-size: 16px;
+  }
+
   body {
-    background: #312e38;
-    color: #fff;
+    background: #181821;
+    color: #fcfcfc;
     -webkit-font-smoothing: antialiased;
   }
 
   body, input, button {
-    font-family: 'Roboto Slab', serif;
-    font-size: 16px;
+    font-family: 'Lato', sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6, strong {
-    font-weight: 500;
+    font-weight: 700;
   }
-  
+
   button {
     cursor: pointer;
   }

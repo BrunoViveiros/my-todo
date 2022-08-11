@@ -1,9 +1,18 @@
-import { Container } from "./TodoList.styles";
+import { Container, List } from "./TodoList.styles";
+import { ListItem, Footer, TodoInput } from "./components";
 
 function TodoList() {
   return (
     <Container>
-      <input type="text" placeholder="What needs to be done?" />
+      <TodoInput />
+      <List>
+        <ListItem completed={true}>asda</ListItem>
+        <ListItem completed={false}>asda</ListItem>
+        <ListItem completed={true}>asda</ListItem>
+        <ListItem completed={false}>asda</ListItem>
+        <ListItem completed={true}>asda</ListItem>
+      </List>
+      <Footer />
     </Container>
   );
 }
