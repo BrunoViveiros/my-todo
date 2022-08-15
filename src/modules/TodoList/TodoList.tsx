@@ -26,6 +26,7 @@ const TodoList = () => {
       done: false,
     },
   ]);
+  const [editing, setEditing] = useState<number | null>(null);
 
   const calculateId = () => {
     const maxId = todos.reduce((max, todo) => Math.max(max, todo.id), 0);
@@ -66,13 +67,40 @@ const TodoList = () => {
         e.currentTarget.value = "";
       }
     };
-  
+
+  const handleEditing =
+    (id: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { value } = e.currentTarget;
+
+      const toggleSelectedTodo = (todo: Todo) => {
+        if (todo.id === id) {
+          return {
+            ...todo,
+            text: value,
+          };
+        }
+        return todo;
+      };
+
+      setTodos((prevState) => prevState.map(toggleSelectedTodo));
+    };
+
+  const isEditing = (id: number) => editing === id;
+
   return (
     <Container>
       <TodoInput addTodo={addTodo} handleInputSubmit={handleInputSubmit} />
       <List>
         {todos.map(({ id, text, done }) => (
-          <ListItem key={id} id={id} done={done} toggleTodo={toggleTodo}>
+          <ListItem
+            key={id}
+            id={id}
+            done={done}
+            toggleTodo={toggleTodo}
+            handleEditing={handleEditing}
+            isEditing={isEditing(id)}
+            setEditing={setEditing}
+          >
             {text}
           </ListItem>
         ))}

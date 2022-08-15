@@ -12,8 +12,8 @@ https://todomvc.com/examples/backbone_require/
 [x] Listing to-dos view
 
 [x] Adding a new to-do
-[ ] Editing a to-do
-[ ] Marking a to-do as complete
+[x] Editing a to-do
+[x] Marking a to-do as complete
 [ ] Counting the amount of active to-dos
 [ ] Clearing completed button
 [ ] Filtering

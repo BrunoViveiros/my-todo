@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 type Status = {
   done: boolean;
+  isEditing: boolean;
 };
 
 export const RemoveIcon = styled.span`
@@ -62,7 +63,8 @@ export const Container = styled.li<Status>`
   align-items: center;
   font-size: 1.2rem;
 
-
+  background-color: ${({ isEditing }) =>
+    isEditing ? "#282833" : "transparent"};
 
   padding: 0.3rem;
   border-radius: 0.55rem;
@@ -81,9 +83,11 @@ export const Container = styled.li<Status>`
 
   > ${Checkbox} {
     background-color: ${({ done }) => (done ? "#ac6dde" : "transparent")};
+    visibility: ${({ isEditing }) => (isEditing ? "hidden" : "visible")};
 
     ::after {
       color: ${({ done }) => (done ? "inherit" : "transparent")};
+      visibility: ${({ isEditing }) => (isEditing ? "hidden" : "visible")};
     }
   }
 `;
