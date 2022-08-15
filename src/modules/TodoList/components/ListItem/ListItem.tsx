@@ -1,22 +1,21 @@
-import {
-  Container,
-  Checkbox,
-  RemoveIcon,
-  Text,
-} from "./ListItem.styles";
+import { Container, Checkbox, RemoveIcon, Text } from "./ListItem.styles";
 
 type ListItemProps = {
   children: string;
   id: number;
   done: boolean;
+  toggleTodo: (id: number) => () => void;
 };
 
-const ListItem = ({ id, done, children }: ListItemProps) => {
+const ListItem = ({ id, done, children, toggleTodo }: ListItemProps) => {
   return (
     <Container done={done}>
-      <Checkbox />
+      <Checkbox onClick={toggleTodo(id)} />
 
-      <Text>{children}</Text>
+
+      <Text>
+        {id} - {children}
+      </Text>
 
       <RemoveIcon>🗑️</RemoveIcon>
     </Container>

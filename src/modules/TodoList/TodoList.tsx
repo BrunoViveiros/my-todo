@@ -37,6 +37,20 @@ const TodoList = () => {
     setTodos([...todos, newTodo]);
   };
 
+  const toggleTodo = (id: number) => () => {
+    const toggleSelectedTodo = (todo: Todo) => {
+      if (todo.id === id) {
+        return {
+          ...todo,
+          done: !todo.done,
+        };
+      }
+      return todo;
+    };
+
+    setTodos((prevState) => prevState.map(toggleSelectedTodo));
+  };
+
   const handleInputSubmit =
     (actionTodo: (text: string) => void) =>
     (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -53,7 +67,7 @@ const TodoList = () => {
       <TodoInput addTodo={addTodo} handleInputSubmit={handleInputSubmit} />
       <List>
         {todos.map(({ id, text, done }) => (
-          <ListItem key={id} id={id} done={done}>
+          <ListItem key={id} id={id} done={done} toggleTodo={toggleTodo}>
             {text}
           </ListItem>
         ))}
