@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 type Status = {
-  completed: boolean;
+  done: boolean;
 };
 
 export const RemoveIcon = styled.span`
@@ -13,22 +13,13 @@ export const RemoveIcon = styled.span`
   user-select: none;
 `;
 
-export const Container = styled.li`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  font-size: 1.2rem;
-
-  & + & {
-    margin-top: 1rem;
-  }
-
-  &:hover > ${RemoveIcon} {
-    display: block;
-  }
+export const Text = styled.p`
+  flex: 1;
+  text-decoration: none;
+  color: #fcfcfc;
 `;
 
-export const Checkbox = styled.span<Status>`
+export const Checkbox = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -44,19 +35,55 @@ export const Checkbox = styled.span<Status>`
 
   border-radius: 0.55rem;
   border: 0.2rem solid #ac6dde;
-  background-color: ${({ completed }) =>
-    completed ? "#ac6dde" : "transparent"};
 
   ::after {
     content: "✓";
-    visibility: ${({ completed }) => (completed ? "visible" : "hidden")};
-    color: inherit;
     font-size: 1rem;
     font-weight: bolder;
   }
 `;
 
-export const Text = styled.p<Status>`
+export const EditText = styled.input`
   flex: 1;
-  text-decoration: ${({ completed }) => (completed ? "line-through" : "none")};
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 1.2rem;
+  color: #fcfcfc;
+
+  background-color: #282833;
+  border: 0;
+`;
+
+export const Container = styled.li<Status>`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 1.2rem;
+
+
+
+  padding: 0.3rem;
+  border-radius: 0.55rem;
+
+  & + & {
+    margin-top: 0.4rem;
+  }
+
+  &:hover > ${Text} ~ ${RemoveIcon} {
+    display: block;
+  }
+
+  > ${Text} {
+    text-decoration: ${({ done }) => (done ? "line-through" : "none")};
+  }
+
+  > ${Checkbox} {
+    background-color: ${({ done }) => (done ? "#ac6dde" : "transparent")};
+
+    ::after {
+      color: ${({ done }) => (done ? "inherit" : "transparent")};
+    }
+  }
 `;

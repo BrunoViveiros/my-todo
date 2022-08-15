@@ -5,6 +5,8 @@ export const SelectAllIcon = styled.span`
   transform: rotate(90deg);
   font-size: 1rem;
   width: 1rem;
+  cursor: pointer;
+  user-select: none;
 `;
 
 export const Container = styled.div`
