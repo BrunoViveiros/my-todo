@@ -37,11 +37,20 @@ const TodoList = () => {
     setTodos([...todos, newTodo]);
   };
 
+  const handleInputSubmit =
+    (actionTodo: (text: string) => void) =>
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      const { value } = e.currentTarget;
 
+      if (value.trim() && e.key === "Enter") {
+        actionTodo(value);
+        e.currentTarget.value = "";
+      }
+    };
   
   return (
     <Container>
-      <TodoInput addTodo={addTodo} />
+      <TodoInput addTodo={addTodo} handleInputSubmit={handleInputSubmit} />
       <List>
         {todos.map(({ id, text, done }) => (
           <ListItem key={id} id={id} done={done}>
