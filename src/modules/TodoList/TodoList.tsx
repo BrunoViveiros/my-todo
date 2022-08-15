@@ -27,9 +27,14 @@ const TodoList = () => {
     },
   ]);
 
+  const calculateId = () => {
+    const maxId = todos.reduce((max, todo) => Math.max(max, todo.id), 0);
+    return maxId + 1;
+  };
+
   const addTodo = (text: string) => {
     const newTodo: Todo = {
-      id: todos.length + 1,
+      id: calculateId(),
       text,
       done: false,
     };
