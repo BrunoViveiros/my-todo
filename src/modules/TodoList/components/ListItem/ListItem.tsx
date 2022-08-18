@@ -34,6 +34,7 @@ const ListItem = ({
       {isEditing ? (
         <EditText
           autoFocus
+          onBlur={() => setEditing(null)}
           defaultValue={children}
           onChange={handleEditing(id)}
           onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
