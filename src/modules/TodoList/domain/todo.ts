@@ -1,10 +1,13 @@
-type Todo = {
+export type Todo = {
   id: number;
   text: string;
   done: boolean;
 };
 
-type TodoList = Todo[];
+type editTodoProps = {
+  todo: Todo;
+  newText: string;
+};
 
 const createTodo = ({ id, text }: Omit<Todo, "done">): Todo => {
   return {
@@ -14,42 +17,18 @@ const createTodo = ({ id, text }: Omit<Todo, "done">): Todo => {
   };
 };
 
-const editTodoText = ({ text, ...todo }: Todo) => {
+const editTodoText = ({ todo, newText }: editTodoProps): Todo => {
   return {
     ...todo,
-    text,
+    text: newText,
   };
 };
 
-const toggleTodoStatus = ({ done, ...todo }: Todo) => {
+const toggleTodoStatus = (todo: Todo): Todo => {
   return {
     ...todo,
-    done: !done,
+    done: !todo.done,
   };
 };
 
-const addTodoToList = (todo: Todo, todoList: TodoList): TodoList => {
-  return [...todoList, todo];
-};
-
-const removeTodoFromList = (
-  { id }: Pick<Todo, "id">,
-  todoList: TodoList
-): TodoList => {
-  const newList = todoList.filter((todo) => {
-    if (todo.id === id) return false;
-    return true;
-  });
-
-  return newList;
-};
-
-const getTodosLength = (todoList: TodoList): number => {
-  return todoList.length;
-};
-
-const toggleAllTodosStatus = (todoList: TodoList): TodoList => {
-  return todoList;
-};
-
-export { createTodo, toggleTodoStatus, editTodoText };
+export { createTodo, editTodoText, toggleTodoStatus };
