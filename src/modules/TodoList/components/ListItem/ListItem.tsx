@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import {
   Container,
   Checkbox,
@@ -6,46 +7,11 @@ import {
   EditText,
 } from "./ListItem.styles";
 
-type ListItemProps = {
-  children: string;
-  id: number;
-  done: boolean;
-  isEditing: boolean;
-  setEditing: (id: number | null) => void;
-  toggleTodo: (id: number) => () => void;
-  handleEditing: (
-    id: number
-  ) => (e: React.ChangeEvent<HTMLInputElement>) => void;
-};
-
-const ListItem = ({
-  id,
-  done,
-  children,
-  toggleTodo,
-  handleEditing,
-  isEditing,
-  setEditing,
-}: ListItemProps) => {
+const ListItem = ({ children }: { children: ReactNode }) => {
   return (
-    <Container isEditing={isEditing} done={done}>
-      <Checkbox onClick={toggleTodo(id)} />
-
-      {isEditing ? (
-        <EditText
-          autoFocus
-          onBlur={() => setEditing(null)}
-          defaultValue={children}
-          onChange={handleEditing(id)}
-          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-            if (e.key === "Enter") {
-              setEditing(null);
-            }
-          }}
-        />
-      ) : (
-        <Text onDoubleClick={() => setEditing(id)}>{children}</Text>
-      )}
+    <Container isEditing={false} done={false}>
+      <Checkbox />
+      {false ? <EditText /> : <Text>{children}</Text>}
 
       <RemoveIcon>🗑️</RemoveIcon>
     </Container>
