@@ -1,19 +1,45 @@
+import styled from "styled-components";
+
 import { ListItem, Footer, TodoInput } from "./components";
 import { TodoProvider } from "./context/TodoContext";
-import { Container, List } from "./TodoList.styles";
 
 const TodoList = () => {
   return (
     <TodoProvider>
-      <Container>
+      <S.Container>
         <TodoInput />
-        <List>
+        <S.List>
           <ListItem>asd</ListItem>
-        </List>
+        </S.List>
         <Footer />
-      </Container>
+      </S.Container>
     </TodoProvider>
   );
 };
+
+const S = (() => {
+  const Container = styled.div`
+    min-width: 23rem;
+    max-width: 32rem;
+    margin: 6rem;
+  `;
+
+  const List = styled.ul`
+    background-color: #21212b;
+    list-style: none;
+    padding: 1rem;
+    display: none;
+
+    &:has(> li) {
+      display: block;
+    }
+
+    &:has(> li) + footer {
+      display: flex;
+    }
+  `;
+
+  return { Container, List };
+})();
 
 export default TodoList;
