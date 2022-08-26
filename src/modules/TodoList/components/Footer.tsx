@@ -15,7 +15,7 @@ const Footer = () => {
 
 const S = (() => {
   const Container = styled.footer`
-    display: none;
+    display: flex;
     justify-content: space-between;
     align-items: center;
 

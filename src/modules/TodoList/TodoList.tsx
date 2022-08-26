@@ -28,15 +28,7 @@ const S = (() => {
     background-color: #21212b;
     list-style: none;
     padding: 1rem;
-    display: none;
-
-    &:has(> li) {
-      display: block;
-    }
-
-    &:has(> li) + footer {
-      display: flex;
-    }
+    display: block;
   `;
 
   return { Container, List };
