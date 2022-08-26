@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { useTodos } from "../context/TodoContext";
 
@@ -6,19 +7,68 @@ const List = () => {
 
   return (
     <S.List>
-      {todos.map(({ id, text }) => (
-        <ListItem key={id}>{text}</ListItem>
+      {todos.map(({ id, text, done }) => (
+        <ListItem key={id} id={id} done={done}>
+          {text}
+        </ListItem>
       ))}
     </S.List>
   );
 };
 
-const ListItem = ({ children }: { children: string }) => {
+type ListItemProps = {
+  children: string;
+  done: boolean;
+  id: number;
+};
+
+type handleKeyDown = {
+  keyName: string;
+  todoId: number;
+};
+
+const ListItem = ({ children, done, id }: ListItemProps) => {
+  const { toggleTodoStatus, removeTodoFromList, changeTodoText } = useTodos();
+
+  const [editing, setEditing] = useState(0);
+
+  const handleCheckbox = (todoId: number) => {
+    toggleTodoStatus(todoId);
+  };
+
+  const handleRemove = (todoId: number) => {
+    removeTodoFromList(todoId);
+  };
+
+  const handleKeyDown =
+    ({ keyName, todoId }: handleKeyDown) =>
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      const { value } = e.currentTarget;
+      const trimmedValue = value.trim();
+
+      if (trimmedValue && e.key === keyName) {
+        console.log({ id: todoId, text: value });
+        changeTodoText({ id: todoId, text: value });
+        e.currentTarget.value = "";
+        setEditing(0);
+      }
+    };
+
+  const isEditing = editing === id;
+
   return (
-    <S.ListItem isEditing={false} done={false}>
-      <S.Checkbox />
-      {false ? <S.EditText /> : <S.Text>{children}</S.Text>}
-      <S.RemoveIcon>🗑️</S.RemoveIcon>
+    <S.ListItem isEditing={isEditing} done={done}>
+      <S.Checkbox onClick={() => handleCheckbox(id)} />
+      {isEditing ? (
+        <S.EditText
+          autoFocus
+          onKeyDown={handleKeyDown({ keyName: "Enter", todoId: id })}
+          onBlur={() => setEditing(0)}
+        />
+      ) : (
+        <S.Text onDoubleClick={() => setEditing(id)}>{children}</S.Text>
+      )}
+      <S.RemoveIcon onClick={() => handleRemove(id)}>🗑️</S.RemoveIcon>
     </S.ListItem>
   );
 };
@@ -86,7 +136,6 @@ const S = (() => {
     justify-content: flex-start;
     align-items: center;
     font-size: 1.2rem;
-
     background-color: ${({ isEditing }) =>
       isEditing ? "#282833" : "transparent"};
 
@@ -120,15 +169,7 @@ const S = (() => {
     background-color: #21212b;
     list-style: none;
     display: block;
-    padding: 0 1rem;
-
-    > ${ListItem}:first-child {
-      padding-top: 1rem;
-    }
-
-    > ${ListItem}:last-child {
-      padding-bottom: 1rem;
-    }
+    padding: 1rem;
   `;
 
   return { RemoveIcon, Text, Checkbox, EditText, ListItem, List };

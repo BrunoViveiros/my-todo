@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useState, useContext } from "react";
 
-import { Todo, createTodo } from "../domain/todo";
+import { Todo, createTodo, toggleTodo, editTodoText } from "../domain/todo";
 
 type TodoProviderProps = {
   children: ReactNode;
@@ -9,6 +9,9 @@ type TodoProviderProps = {
 type TodoContextData = {
   todos: Todo[];
   createNewTodo: (text: string) => void;
+  toggleTodoStatus: (id: number) => void;
+  removeTodoFromList: (id: number) => void;
+  changeTodoText: ({ id, text }: Omit<Todo, "done">) => void;
   activeTodosQuantity: number;
   listHasTodos: boolean;
 };
@@ -28,7 +31,34 @@ export const TodoProvider = ({ children }: TodoProviderProps) => {
   const createNewTodo = (text: string) => {
     const newTodo = createTodo({ id: generateNewId(), text });
     setTodos([...todos, newTodo]);
-    console.log(todos);
+  };
+
+  const toggleTodoStatus = (id: number) => {
+    const updatedList = todos.map((todo) => {
+      if (todo.id === id) {
+        return toggleTodo(todo);
+      }
+      return todo;
+    });
+
+    setTodos(updatedList);
+  };
+
+  const removeTodoFromList = (id: number) => {
+    const updatedList = todos.filter((todos) => todos.id !== id);
+
+    setTodos(updatedList);
+  };
+
+  const changeTodoText = ({ id, text }: Omit<Todo, "done">) => {
+    const updatedList = todos.map((todo) => {
+      if (todo.id === id) {
+        return editTodoText({ todo, newText: text });
+      }
+      return todo;
+    });
+
+    setTodos(updatedList);
   };
 
   const activeTodosQuantity = todos.reduce((acc, todo) => {
@@ -42,7 +72,15 @@ export const TodoProvider = ({ children }: TodoProviderProps) => {
 
   return (
     <TodosContext.Provider
-      value={{ todos, createNewTodo, activeTodosQuantity, listHasTodos }}
+      value={{
+        todos,
+        createNewTodo,
+        toggleTodoStatus,
+        removeTodoFromList,
+        changeTodoText,
+        activeTodosQuantity,
+        listHasTodos,
+      }}
     >
       {children}
     </TodosContext.Provider>

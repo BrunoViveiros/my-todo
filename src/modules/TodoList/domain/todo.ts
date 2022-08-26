@@ -24,11 +24,11 @@ const editTodoText = ({ todo, newText }: editTodoProps): Todo => {
   };
 };
 
-const toggleTodoStatus = (todo: Todo): Todo => {
+const toggleTodo = (todo: Todo): Todo => {
   return {
     ...todo,
     done: !todo.done,
   };
 };
 
-export { createTodo, editTodoText, toggleTodoStatus };
+export { createTodo, editTodoText, toggleTodo };
