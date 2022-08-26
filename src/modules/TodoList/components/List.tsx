@@ -1,14 +1,25 @@
-import { ReactNode } from "react";
 import styled from "styled-components";
+import { useTodos } from "../context/TodoContext";
 
-const ListItem = ({ children }: { children: ReactNode }) => {
+const List = () => {
+  const { todos } = useTodos();
+
   return (
-    <S.Container isEditing={false} done={false}>
+    <S.List>
+      {todos.map(({ id, text }) => (
+        <ListItem key={id}>{text}</ListItem>
+      ))}
+    </S.List>
+  );
+};
+
+const ListItem = ({ children }: { children: string }) => {
+  return (
+    <S.ListItem isEditing={false} done={false}>
       <S.Checkbox />
       {false ? <S.EditText /> : <S.Text>{children}</S.Text>}
-
       <S.RemoveIcon>🗑️</S.RemoveIcon>
-    </S.Container>
+    </S.ListItem>
   );
 };
 
@@ -70,7 +81,7 @@ const S = (() => {
     border: 0;
   `;
 
-  const Container = styled.li<Status>`
+  const ListItem = styled.li<Status>`
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -105,7 +116,22 @@ const S = (() => {
     }
   `;
 
-  return { RemoveIcon, Text, Checkbox, EditText, Container };
+  const List = styled.ul`
+    background-color: #21212b;
+    list-style: none;
+    display: block;
+    padding: 0 1rem;
+
+    > ${ListItem}:first-child {
+      padding-top: 1rem;
+    }
+
+    > ${ListItem}:last-child {
+      padding-bottom: 1rem;
+    }
+  `;
+
+  return { RemoveIcon, Text, Checkbox, EditText, ListItem, List };
 })();
 
-export default ListItem;
+export default List;

@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useState, useContext } from "react";
 
-import { Todo } from "../domain/todo";
+import { Todo, createTodo } from "../domain/todo";
 
 type TodoProviderProps = {
   children: ReactNode;
@@ -9,26 +9,36 @@ type TodoProviderProps = {
 type TodoContextData = {
   todos: Todo[];
   createNewTodo: (text: string) => void;
+  listLength: number;
+  listHasTodos: boolean;
 };
 
-const contextDefaultValues: TodoContextData = {
-  todos: [],
-  createNewTodo: () => {},
-};
-
-export const TodosContext =
-  createContext<TodoContextData>(contextDefaultValues);
+export const TodosContext = createContext<TodoContextData>(
+  {} as TodoContextData
+);
 
 export const TodoProvider = ({ children }: TodoProviderProps) => {
   const [todos, setTodos] = useState<Todo[]>([]);
 
+  const generateNewId = (): number => {
+    const maxId = todos.reduce((max, todo) => Math.max(max, todo.id), 0);
+    return maxId + 1;
+  };
+
   const createNewTodo = (text: string) => {
-    setTodos([...todos, { id: 2, done: false, text }]);
+    const newTodo = createTodo({ id: generateNewId(), text });
+    setTodos([...todos, newTodo]);
     console.log(todos);
   };
 
+  const listLength = todos.length;
+
+  const listHasTodos = !!todos.length;
+
   return (
-    <TodosContext.Provider value={{ todos, createNewTodo }}>
+    <TodosContext.Provider
+      value={{ todos, createNewTodo, listLength, listHasTodos }}
+    >
       {children}
     </TodosContext.Provider>
   );

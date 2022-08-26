@@ -1,8 +1,11 @@
 import styled from "styled-components";
+import { useTodos } from "../context/TodoContext";
 
 const Footer = () => {
+  const { listHasTodos } = useTodos();
+
   return (
-    <S.Container>
+    <S.Container listHasTodos={listHasTodos}>
       <S.Counter>99 items left</S.Counter>
       <S.FiltersWrapper>
         <S.FilterOption>All</S.FilterOption>
@@ -14,7 +17,11 @@ const Footer = () => {
 };
 
 const S = (() => {
-  const Container = styled.footer`
+  type Status = {
+    listHasTodos: boolean;
+  };
+
+  const Container = styled.footer<Status>`
     display: flex;
     justify-content: space-between;
     align-items: center;

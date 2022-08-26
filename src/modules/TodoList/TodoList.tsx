@@ -1,18 +1,27 @@
 import styled from "styled-components";
 
-import { ListItem, Footer, TodoInput } from "./components";
-import { TodoProvider } from "./context/TodoContext";
+import { List, Footer, TodoInput } from "./components";
+import { TodoProvider, useTodos } from "./context/TodoContext";
+
+const Wrapper = () => {
+  const { listHasTodos } = useTodos();
+  return (
+    <S.Container>
+      <TodoInput />
+      {listHasTodos && (
+        <>
+          <List />
+          <Footer />
+        </>
+      )}
+    </S.Container>
+  );
+};
 
 const TodoList = () => {
   return (
     <TodoProvider>
-      <S.Container>
-        <TodoInput />
-        <S.List>
-          <ListItem>asd</ListItem>
-        </S.List>
-        <Footer />
-      </S.Container>
+      <Wrapper />
     </TodoProvider>
   );
 };
@@ -24,14 +33,7 @@ const S = (() => {
     margin: 6rem;
   `;
 
-  const List = styled.ul`
-    background-color: #21212b;
-    list-style: none;
-    padding: 1rem;
-    display: block;
-  `;
-
-  return { Container, List };
+  return { Container };
 })();
 
 export default TodoList;
