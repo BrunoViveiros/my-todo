@@ -9,7 +9,7 @@ type TodoProviderProps = {
 type TodoContextData = {
   todos: Todo[];
   createNewTodo: (text: string) => void;
-  listLength: number;
+  activeTodosQuantity: number;
   listHasTodos: boolean;
 };
 
@@ -31,13 +31,18 @@ export const TodoProvider = ({ children }: TodoProviderProps) => {
     console.log(todos);
   };
 
-  const listLength = todos.length;
+  const activeTodosQuantity = todos.reduce((acc, todo) => {
+    if (todo.done === false) {
+      return acc + 1;
+    }
+    return acc;
+  }, 0);
 
   const listHasTodos = !!todos.length;
 
   return (
     <TodosContext.Provider
-      value={{ todos, createNewTodo, listLength, listHasTodos }}
+      value={{ todos, createNewTodo, activeTodosQuantity, listHasTodos }}
     >
       {children}
     </TodosContext.Provider>

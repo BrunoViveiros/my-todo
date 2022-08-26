@@ -2,11 +2,15 @@ import styled from "styled-components";
 import { useTodos } from "../context/TodoContext";
 
 const Footer = () => {
-  const { listHasTodos } = useTodos();
+  const { listHasTodos, activeTodosQuantity } = useTodos();
 
   return (
     <S.Container listHasTodos={listHasTodos}>
-      <S.Counter>99 items left</S.Counter>
+      <S.Counter>
+        {activeTodosQuantity === 1
+          ? activeTodosQuantity + " item left"
+          : activeTodosQuantity + " items left"}
+      </S.Counter>
       <S.FiltersWrapper>
         <S.FilterOption>All</S.FilterOption>
         <S.FilterOption>Active</S.FilterOption>
