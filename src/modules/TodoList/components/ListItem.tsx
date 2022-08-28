@@ -78,7 +78,7 @@ const RemoveIcon = styled.span`
 const Text = styled.p`
   flex: 1;
   text-decoration: none;
-  color: #fcfcfc;
+  color: ${({ theme }) => theme.colors.text};
 `;
 
 const Checkbox = styled.span`
@@ -96,7 +96,7 @@ const Checkbox = styled.span`
   margin-right: 0.8rem;
 
   border-radius: 0.55rem;
-  border: 0.2rem solid #ac6dde;
+  border: 0.2rem solid ${({ theme }) => theme.colors.accent};
 
   ::after {
     content: "✓";
@@ -112,9 +112,9 @@ const EditText = styled.input`
   justify-content: flex-start;
   align-items: center;
   font-size: 1.2rem;
-  color: #fcfcfc;
+  color: ${({ theme }) => theme.colors.text};
 
-  background-color: #282833;
+  background-color: ${({ theme }) => theme.colors.secondary};
   border: 0;
 `;
 
@@ -123,8 +123,8 @@ const Container = styled.li<Status>`
   justify-content: flex-start;
   align-items: center;
   font-size: 1.2rem;
-  background-color: ${({ isEditing }) =>
-    isEditing ? "#282833" : "transparent"};
+  background-color: ${({ isEditing, theme }) =>
+    isEditing ? theme.colors.secondary : "transparent"};
 
   padding: 0.3rem;
   border-radius: 0.55rem;
@@ -142,7 +142,8 @@ const Container = styled.li<Status>`
   }
 
   > ${Checkbox} {
-    background-color: ${({ done }) => (done ? "#ac6dde" : "transparent")};
+    background-color: ${({ done, theme }) =>
+      done ? theme.colors.accent : "transparent"};
     visibility: ${({ isEditing }) => (isEditing ? "hidden" : "visible")};
 
     ::after {

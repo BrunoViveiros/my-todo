@@ -54,7 +54,7 @@ const Container = styled.div<Status>`
   padding: 1rem 1.3rem;
   font-size: 1.6rem;
 
-  background-color: #282833;
+  background-color: ${({ theme }) => theme.colors.secondary};
 `;
 
 const Input = styled.input`
@@ -68,7 +68,11 @@ const Input = styled.input`
   outline: none;
   padding: 0 1rem;
 
-  color: #fcfcfc;
+  color: ${({ theme }) => theme.colors.text};
+
+  ::placeholder {
+    color: ${({ theme }) => theme.colors.placeholderText};
+  }
 `;
 
 export default TodoInput;

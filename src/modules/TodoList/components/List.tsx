@@ -22,7 +22,7 @@ const List = () => {
 };
 
 const Container = styled.ul<ContainerProps>`
-  background-color: #21212b;
+  background-color: ${({ theme }) => theme.colors.primary};
   list-style: none;
   display: block;
   padding: ${({ listSize }) => (listSize ? "1rem" : "0")};

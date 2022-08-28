@@ -6,7 +6,7 @@ import { TodoProvider, useTodos } from "./context/TodoContext";
 const TodoList = () => {
   const { listHasTodos } = useTodos();
   return (
-    <S.Container>
+    <Container>
       <TodoInput />
       {listHasTodos && (
         <>
@@ -14,7 +14,7 @@ const TodoList = () => {
           <Footer />
         </>
       )}
-    </S.Container>
+    </Container>
   );
 };
 
@@ -26,14 +26,10 @@ const Wrapper = () => {
   );
 };
 
-const S = (() => {
-  const Container = styled.div`
-    min-width: 23rem;
-    max-width: 32rem;
-    margin: 6rem;
-  `;
-
-  return { Container };
-})();
+const Container = styled.div`
+  min-width: 23rem;
+  max-width: 32rem;
+  margin: 6rem;
+`;
 
 export default Wrapper;

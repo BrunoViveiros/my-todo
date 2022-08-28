@@ -37,8 +37,8 @@ const Container = styled.footer<Status>`
 
   font-size: 1rem;
   padding: 1rem;
-  background-color: #21212b;
-  border-top: 2px solid #282833;
+  background-color: ${({ theme }) => theme.colors.primary};
+  border-top: 0.2rem solid ${({ theme }) => theme.colors.secondary};
   border-radius: 0 0 1.3rem 1.3rem;
 `;
 
@@ -46,12 +46,12 @@ const Counter = styled.p``;
 
 const ClearButton = styled.button`
   background-color: transparent;
-  color: #fcfcfc;
+  color: ${({ theme }) => theme.colors.text};
   padding: 0.2rem 0.4rem;
   border: 0;
 
   :hover {
-    color: #fcfcfc;
+    color: ${({ theme }) => theme.colors.text};
     filter: brightness(0.7);
   }
 `;
