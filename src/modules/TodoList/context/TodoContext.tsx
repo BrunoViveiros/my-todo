@@ -26,6 +26,8 @@ type TodoContextData = {
   setTodoFilter: (filter: Filters) => void;
   activeFilter: Filters;
   toggleAllTodosStatus: () => void;
+  clearCompletedTodos: () => void;
+  listHasCompletedTodos: boolean;
 };
 
 export const TodosContext = createContext<TodoContextData>(
@@ -82,6 +84,8 @@ export const TodoProvider = ({ children }: TodoProviderProps) => {
     return acc;
   }, 0);
 
+  const listHasCompletedTodos = Boolean(todos.find(({ done }) => done));
+
   const listHasTodos = !!todos.length;
 
   const isEditingTodo = (id: number) => editing === id;
@@ -128,6 +132,12 @@ export const TodoProvider = ({ children }: TodoProviderProps) => {
     setTodos(updatedList);
   };
 
+  const clearCompletedTodos = () => {
+    const updatedList = todos.filter(({ done }) => !done);
+
+    setTodos(updatedList);
+  };
+
   return (
     <TodosContext.Provider
       value={{
@@ -144,6 +154,8 @@ export const TodoProvider = ({ children }: TodoProviderProps) => {
         setTodoFilter,
         activeFilter,
         toggleAllTodosStatus,
+        clearCompletedTodos,
+        listHasCompletedTodos,
       }}
     >
       {children}

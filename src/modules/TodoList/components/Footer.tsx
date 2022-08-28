@@ -8,7 +8,12 @@ type Status = {
 };
 
 const Footer = () => {
-  const { listHasTodos, activeTodosQuantity } = useTodos();
+  const {
+    listHasTodos,
+    activeTodosQuantity,
+    clearCompletedTodos,
+    listHasCompletedTodos,
+  } = useTodos();
 
   return (
     <Container listHasTodos={listHasTodos}>
@@ -18,6 +23,9 @@ const Footer = () => {
           : activeTodosQuantity + " items left"}
       </Counter>
       <FiltersOptions />
+      {listHasCompletedTodos && (
+        <ClearButton onClick={clearCompletedTodos}>Clear Completed</ClearButton>
+      )}
     </Container>
   );
 };
@@ -35,5 +43,17 @@ const Container = styled.footer<Status>`
 `;
 
 const Counter = styled.p``;
+
+const ClearButton = styled.button`
+  background-color: transparent;
+  color: #fcfcfc;
+  padding: 0.2rem 0.4rem;
+  border: 0;
+
+  :hover {
+    color: #fcfcfc;
+    filter: brightness(0.7);
+  }
+`;
 
 export default Footer;
