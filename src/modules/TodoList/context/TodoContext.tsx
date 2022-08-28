@@ -1,19 +1,30 @@
 import { createContext, ReactNode, useState, useContext } from "react";
 
-import { Todo, createTodo, toggleTodo, editTodoText } from "../domain/todo";
+import {
+  Todo,
+  Filters,
+  createTodo,
+  toggleTodo,
+  editTodoText,
+} from "../domain/todo";
 
 type TodoProviderProps = {
   children: ReactNode;
 };
 
 type TodoContextData = {
-  todos: Todo[];
   createNewTodo: (text: string) => void;
   toggleTodoStatus: (id: number) => void;
   removeTodoFromList: (id: number) => void;
   changeTodoText: ({ id, text }: Omit<Todo, "done">) => void;
+  setEditingTodo: (id: number) => void;
+  isEditingTodo: (id: number) => boolean;
+  clearEditingTodo: () => void;
   activeTodosQuantity: number;
   listHasTodos: boolean;
+  filteredTodos: Todo[];
+  setTodoFilter: (filter: Filters) => void;
+  activeFilter: Filters;
 };
 
 export const TodosContext = createContext<TodoContextData>(
@@ -22,6 +33,8 @@ export const TodosContext = createContext<TodoContextData>(
 
 export const TodoProvider = ({ children }: TodoProviderProps) => {
   const [todos, setTodos] = useState<Todo[]>([]);
+  const [editing, setEditing] = useState(0);
+  const [activeFilter, setActiveFilter] = useState<Filters>(Filters.ALL);
 
   const generateNewId = (): number => {
     const maxId = todos.reduce((max, todo) => Math.max(max, todo.id), 0);
@@ -70,16 +83,48 @@ export const TodoProvider = ({ children }: TodoProviderProps) => {
 
   const listHasTodos = !!todos.length;
 
+  const isEditingTodo = (id: number) => editing === id;
+
+  const setEditingTodo = (id: number) => {
+    setEditing(id);
+  };
+
+  const clearEditingTodo = () => {
+    setEditing(0);
+  };
+
+  const filteredTodos = () => {
+    switch (activeFilter) {
+      case Filters.ALL:
+        return todos;
+      case Filters.ACTIVE:
+        return todos.filter((todo) => todo.done === false);
+      case Filters.COMPLETED:
+        return todos.filter((todo) => todo.done === true);
+      default:
+        return todos;
+    }
+  };
+
+  const setTodoFilter = (filter: Filters) => {
+    setActiveFilter(filter);
+  };
+
   return (
     <TodosContext.Provider
       value={{
-        todos,
         createNewTodo,
         toggleTodoStatus,
         removeTodoFromList,
         changeTodoText,
         activeTodosQuantity,
         listHasTodos,
+        isEditingTodo,
+        setEditingTodo,
+        clearEditingTodo,
+        filteredTodos: filteredTodos(),
+        setTodoFilter,
+        activeFilter,
       }}
     >
       {children}

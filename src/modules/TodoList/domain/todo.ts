@@ -4,6 +4,12 @@ export type Todo = {
   done: boolean;
 };
 
+export enum Filters {
+  ALL = "all",
+  ACTIVE = "active",
+  COMPLETED = "completed",
+}
+
 type editTodoProps = {
   todo: Todo;
   newText: string;
