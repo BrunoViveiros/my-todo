@@ -7,7 +7,7 @@ type Status = {
 };
 
 const TodoInput = () => {
-  const { createNewTodo, listHasTodos } = useTodos();
+  const { createNewTodo, listHasTodos, toggleAllTodosStatus } = useTodos();
 
   const handleOnKeyDown =
     (keyName: string) => (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -22,7 +22,9 @@ const TodoInput = () => {
 
   return (
     <Container hasTodos={listHasTodos}>
-      {listHasTodos && <SelectAllIcon>❯</SelectAllIcon>}
+      {listHasTodos && (
+        <SelectAllIcon onClick={toggleAllTodosStatus}>❯</SelectAllIcon>
+      )}
       <Input
         type="text"
         placeholder="What needs to be done?"

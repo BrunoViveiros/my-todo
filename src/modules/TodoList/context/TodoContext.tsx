@@ -25,6 +25,7 @@ type TodoContextData = {
   filteredTodos: Todo[];
   setTodoFilter: (filter: Filters) => void;
   activeFilter: Filters;
+  toggleAllTodosStatus: () => void;
 };
 
 export const TodosContext = createContext<TodoContextData>(
@@ -110,6 +111,23 @@ export const TodoProvider = ({ children }: TodoProviderProps) => {
     setActiveFilter(filter);
   };
 
+  const toggleAllTodosStatus = () => {
+    const allCompleted = todos.reduce((acc, { done }) => {
+      if (done) return acc;
+
+      return false;
+    }, true);
+
+    const updatedList = todos.map((todo) => {
+      return {
+        ...todo,
+        done: !allCompleted,
+      };
+    });
+
+    setTodos(updatedList);
+  };
+
   return (
     <TodosContext.Provider
       value={{
@@ -125,6 +143,7 @@ export const TodoProvider = ({ children }: TodoProviderProps) => {
         filteredTodos: filteredTodos(),
         setTodoFilter,
         activeFilter,
+        toggleAllTodosStatus,
       }}
     >
       {children}

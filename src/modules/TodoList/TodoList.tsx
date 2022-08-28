@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { List, Footer, TodoInput } from "./components";
 import { TodoProvider, useTodos } from "./context/TodoContext";
 
-const Wrapper = () => {
+const TodoList = () => {
   const { listHasTodos } = useTodos();
   return (
     <S.Container>
@@ -18,10 +18,10 @@ const Wrapper = () => {
   );
 };
 
-const TodoList = () => {
+const Wrapper = () => {
   return (
     <TodoProvider>
-      <Wrapper />
+      <TodoList />
     </TodoProvider>
   );
 };
@@ -36,4 +36,4 @@ const S = (() => {
   return { Container };
 })();
 
-export default TodoList;
+export default Wrapper;

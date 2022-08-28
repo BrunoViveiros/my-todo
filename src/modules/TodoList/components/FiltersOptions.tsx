@@ -13,7 +13,6 @@ const FiltersOptions = () => {
   return (
     <Container>
       {Object.values(Filters).map((filter) => {
-        console.log(activeFilter === filter);
         return (
           <FilterOption
             key={filter}
