@@ -1,28 +1,15 @@
-import { ThemeProvider } from "styled-components";
-
 import { Homepage } from "./pages";
 import GlobalStyle from "./styles/global";
-import {
-  darkTheme,
-  oneDarkPro,
-  dracula,
-  githubDark,
-  githubLight,
-  winterIsComing,
-  nightOwl,
-  monokaiPro,
-  oneMonokai,
-  shadesOfPurple
-} from "./styles/themes";
+import { MyThemeProvider } from "./context/ThemeContext";
 
-function App() {
+const App = () => {
   return (
-    <ThemeProvider theme={shadesOfPurple}>
+    <MyThemeProvider>
       <GlobalStyle />
 
       <Homepage />
-    </ThemeProvider>
+    </MyThemeProvider>
   );
-}
+};
 
 export default App;

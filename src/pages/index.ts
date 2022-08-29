@@ -1,3 +1,3 @@
-import Homepage from "./Homepage/Homepage";
+import Homepage from "./Homepage";
 
 export { Homepage };
